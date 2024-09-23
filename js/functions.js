@@ -1,8 +1,7 @@
-const checkLength = function (string, maxLength) {
-  return (string.length <= maxLength);
-};
+let checkLength = (string = '', maxLength = 1) => (string.length <= maxLength);
 
-const checkPalindrome = function (string) {
+
+const checkPalindrome = function (string = '') {
   string = string.toLowerCase().replaceAll(' ', '');
   let result = '';
   for (let i = string.length - 1; i >= 0; i--) {
@@ -10,6 +9,7 @@ const checkPalindrome = function (string) {
   }
   return result === string;
 };
+
 
 const findNumbers = function (string) {
   let result = '';
