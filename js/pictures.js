@@ -19,4 +19,3 @@ createPictures.forEach(({url, description, likes, comments}) => {
 });
 
 picturesList.appendChild(similarListFragment);
-console.log(picturesList);
