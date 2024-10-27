@@ -1,5 +1,19 @@
 import {getRandomInteger, createRandomNumbers, getRandomArrayElement} from './util.js';
 
+const DESCRIPTIONS = [
+  'Пойманный момент, который невозможно забыть.',
+  'Красота в каждом мгновении.',
+  'Когда слова лишние, а кадр говорит сам за себя.',
+  'Место, куда хочется возвращаться снова и снова.',
+  'Вдохновляющая атмосфера и уникальные детали.',
+  'Тот самый кадр, который заставляет задуматься.',
+  'Настроение, переданное через объектив.',
+  'Секунда, в которой скрыта целая история.',
+  'Здесь каждый найдёт что-то своё.',
+  'Видеть красоту в простых вещах.',
+  'Тут должно быть описание, но его не будет'
+];
+
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -38,7 +52,7 @@ const createComment = () => ({
 const createPhotoDescription = () => ({
   id: generatePhotoId(),
   url: `photos/${ urlId() }.jpg`,
-  description: 'Тут должно быть описание изображения',
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateNumbersOfLikes(),
   comments: Array.from({length: getRandomInteger(0, 30)}, createComment)
 });
