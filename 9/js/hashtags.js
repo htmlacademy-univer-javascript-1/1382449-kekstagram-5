@@ -1,17 +1,11 @@
 import {isEscapeKey} from './util.js';
-
 const MAX_HASHTAGS_COUNT = 5;
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1, 19}/i;
-const ErrorText = {
-  INVALID_COUNT: `Превышено максимальное количество хэш-тегов (${MAX_HASHTAGS_COUNT}))`,
-  NOT_UNIQUE: 'Хэштэг не может быть указан более одного раза',
-  INVALID_PATTERN: 'Введён невалидный хэш-тег'
-};
+const MAX_SYMBOLS = 20;
 
 const form = document.querySelector('.img-upload__form');
 const formOverlay = form.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
-const hashtagField = form.querySelector('.text__hashtags');
+const inputHashtag = form.querySelector('.text__hashtags');
 
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
@@ -32,17 +26,71 @@ const hideModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const isTextFieldFocused = () => document.activeElement === hashtagField
+const isTextFieldFocused = () => document.activeElement === inputHashtag
   || document.activeElement === form.querySelector('.text__description');
 
-const normalizeTags = (tagString) => tagString.trim().split('').filter((tag) => Boolean(tag.length));
+let errorMessage = '';
 
-const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAGS_COUNT;
-const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
-const hasUniqueTags = (value) => {
-  const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
-  return lowerCaseTags.length === new Set(lowerCaseTags).length;
+const error = () => errorMessage;
+
+const hashtagsHandler = (value) => {
+  errorMessage = '';
+
+  const inputText = value.toLowerCase().trim();
+
+  if (!inputText) {
+    return true;
+  }
+
+  const inputArray = inputText.split(/\s+/);
+
+  const rules = [
+    {
+      check: inputArray.length > MAX_HASHTAGS_COUNT,
+      error: `Нельзя указать более ${MAX_HASHTAGS_COUNT} хэш-тегов`,
+    },
+    {
+      check: inputArray.some((item) => item.length > MAX_SYMBOLS),
+      error: `Максимальная длина одного хэш-тега ${MAX_SYMBOLS} символов, включая решётку`,
+    },
+    {
+      check: inputArray.some((item) => item.indexOf('#', 1) >= 1),
+      error: 'Хэш-теги разделяются пробелами',
+    },
+    {
+      check: inputArray.some((item) => item[0] !== '#'),
+      error: 'Хэш-тег должен начинаться с символа #',
+    },
+    {
+      check: inputArray.some((item, num, arr) => arr.includes(item, num + 1)),
+      error: 'Хэш-теги не должны повторяться',
+    },
+    {
+      check: inputArray.some((item) => !/^#[a-zа-яё0-9]{1,19}/i.test(item)),
+      error: 'Хэш-тег содержит недопустимые символы',
+    },
+  ];
+
+  return rules.every((rule) => {
+    const isInvalid = rule.check;
+    if (isInvalid) {
+      errorMessage = rule.error;
+    }
+    return !isInvalid;
+  });
 };
+
+pristine.addValidator(inputHashtag, hashtagsHandler, error, 2, false);
+
+const onHashtagInput = () => {
+  if (pristine.validate()) {
+    form.querySelector('img-upload__submit').classList.remove('disabled');
+  } else {
+    form.querySelector('img-upload__submit').classList.add('disabled');
+  }
+};
+
+inputHashtag.addEventListener('input', onHashtagInput);
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey && !isTextFieldFocused()) {
@@ -54,29 +102,5 @@ function onDocumentKeydown(evt) {
 const onCancelButtonClick = () => hideModal;
 const onFileInputChange = () => showModal;
 
-pristine.addValidator(
-  hashtagField,
-  hasValidCount,
-  ErrorText.INVALID_COUNT,
-  3,
-  true
-);
-
-pristine.addValidator(
-  hashtagField,
-  hasValidTags,
-  ErrorText.INVALID_PATTERN,
-  2,
-  true
-);
-
-pristine.addValidator(
-  hashtagField,
-  hasUniqueTags,
-  ErrorText.NOT_UNIQUE,
-  1,
-  true
-);
-
-form.querySelector('.img-upload__input').addEventListener('change', onFileInputChange);
-form.querySelector('.img-upload__cancel').addEventListener('click', onCancelButtonClick);
+form.addEventListener('change', onFileInputChange());
+form.querySelector('.img-upload__cancel').addEventListener('click', onCancelButtonClick());
