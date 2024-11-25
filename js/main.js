@@ -1,3 +1,3 @@
 import './pictures.js';
 import './hashtags.js';
-import './slider.js';
+import './slider-and-control.js';
