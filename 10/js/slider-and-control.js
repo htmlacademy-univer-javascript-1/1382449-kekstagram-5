@@ -17,34 +17,32 @@ const picture = previewContainer.querySelector('img');
 
 const effectRadios = document.querySelectorAll('input[name="effect"]');
 
-const chrome = {
-  MAX: 1,
-  MIN: 0,
-  STEP: 0.1,
-};
-
-const sepia = {
-  MAX: 1,
-  MIN: 0,
-  STEP: 0.1,
-};
-
-const marvin = {
-  MAX: 100,
-  MIN: 0,
-  STEP: 1,
-};
-
-const phobos = {
-  MAX: 3,
-  MIN: 0,
-  STEP: 0.1,
-};
-
-const heat = {
-  MAX: 3,
-  MIN: 1,
-  STEP: 0.1,
+const Effects = {
+  chrome: {
+    MAX: 1,
+    MIN: 0,
+    STEP: 0.1,
+  },
+  sepia: {
+    MAX: 1,
+    MIN: 0,
+    STEP: 0.1,
+  },
+  marvin: {
+    MAX: 100,
+    MIN: 0,
+    STEP: 1,
+  },
+  phobos: {
+    MAX: 3,
+    MIN: 0,
+    STEP: 0.1,
+  },
+  heat: {
+    MAX: 3,
+    MIN: 1,
+    STEP: 0.1,
+  },
 };
 
 sliderField.classList.add('hidden');
@@ -62,16 +60,16 @@ const changeSliderForNone = () => {
 };
 
 const createSliderForChrome = () => {
-  let currentSliderValue = chrome.MAX;
+  let currentSliderValue = Effects.chrome.MAX;
   resetSlider();
   sliderField.classList.remove('hidden');
   noUiSlider.create(sliderElement, {
     range: {
-      min: chrome.MIN,
-      max: chrome.MAX,
+      min: Effects.chrome.MIN,
+      max: Effects.chrome.MAX,
     },
-    start: chrome.MAX,
-    step: chrome.STEP,
+    start: Effects.chrome.MAX,
+    step: Effects.chrome.STEP,
     connect: 'lower',
   });
 
@@ -83,16 +81,16 @@ const createSliderForChrome = () => {
 };
 
 const createSliderForSepia = () => {
-  let currentSliderValue = sepia.MAX;
+  let currentSliderValue = Effects.sepia.MAX;
   resetSlider();
   sliderField.classList.remove('hidden');
   noUiSlider.create(sliderElement, {
     range: {
-      min: sepia.MIN,
-      max: sepia.MAX,
+      min: Effects.sepia.MIN,
+      max: Effects.sepia.MAX,
     },
-    start: sepia.MAX,
-    step: sepia.STEP,
+    start: Effects.sepia.MAX,
+    step: Effects.sepia.STEP,
     connect: 'lower',
   });
 
@@ -104,16 +102,16 @@ const createSliderForSepia = () => {
 };
 
 const createSliderForMarvin = () => {
-  let currentSliderValue = marvin.MAX;
+  let currentSliderValue = Effects.marvin.MAX;
   resetSlider();
   sliderField.classList.remove('hidden');
   noUiSlider.create(sliderElement, {
     range: {
-      min: marvin.MIN,
-      max: marvin.MAX,
+      min: Effects.marvin.MIN,
+      max: Effects.marvin.MAX,
     },
-    start: marvin.MAX,
-    step: marvin.STEP,
+    start: Effects.marvin.MAX,
+    step: Effects.marvin.STEP,
     connect: 'lower',
   });
 
@@ -125,16 +123,16 @@ const createSliderForMarvin = () => {
 };
 
 const createSliderForPhobos = () => {
-  let currentSliderValue = phobos.MAX;
+  let currentSliderValue = Effects.phobos.MAX;
   resetSlider();
   sliderField.classList.remove('hidden');
   noUiSlider.create(sliderElement, {
     range: {
-      min: phobos.MIN,
-      max: phobos.MAX,
+      min: Effects.phobos.MIN,
+      max: Effects.phobos.MAX,
     },
-    start: phobos.MAX,
-    step: phobos.STEP,
+    start: Effects.phobos.MAX,
+    step: Effects.phobos.STEP,
     connect: 'lower',
   });
 
@@ -146,16 +144,16 @@ const createSliderForPhobos = () => {
 };
 
 const createSliderForHeat = () => {
-  let currentSliderValue = heat.MAX;
+  let currentSliderValue = Effects.heat.MAX;
   resetSlider();
   sliderField.classList.remove('hidden');
   noUiSlider.create(sliderElement, {
     range: {
-      min: heat.MIN,
-      max: heat.MAX,
+      min: Effects.heat.MIN,
+      max: Effects.heat.MAX,
     },
-    start: heat.MAX,
-    step: heat.STEP,
+    start: Effects.heat.MAX,
+    step: Effects.heat.STEP,
     connect: 'lower',
   });
 
