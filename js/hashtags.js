@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {resetSliderToNone} from './slider-and-control.js';
+import {resetSliderToNone, resetControlToStandart} from './slider-and-control.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_SYMBOLS = 20;
@@ -25,6 +25,7 @@ const hideModal = () => {
   form.reset();
   pristine.reset();
   resetSliderToNone();
+  resetControlToStandart();
   formOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
