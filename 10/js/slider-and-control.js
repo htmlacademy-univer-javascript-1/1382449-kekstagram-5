@@ -213,7 +213,12 @@ const onPlusButtonClick = () => {
   changeZoom();
 };
 
+const resetControlToStandart = () => {
+  controlValueElement.value = '100%';
+  previewContainer.style.transform = 'scale(1)';
+};
+
 minusButton.addEventListener('click', onMinusButtonClick);
 plusButton.addEventListener('click', onPlusButtonClick);
 
-export {resetSliderToNone};
+export {resetSliderToNone, resetControlToStandart};
