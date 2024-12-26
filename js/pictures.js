@@ -16,7 +16,7 @@ const createPictureElement = (picture) => {
 
   pictureElement.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openBigPicture(pictureElement);
+    openBigPicture(picture);
   });
 
   return pictureElement;
