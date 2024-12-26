@@ -9,7 +9,7 @@ let photos;
 const onSuccess = (data) => {
   photos = data.slice();
   renderPhotos(data.slice());
-//   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
 const onFail = () => {
