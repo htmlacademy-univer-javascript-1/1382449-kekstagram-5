@@ -1,4 +1,4 @@
-import {getRandomInteger, createRandomNumbers, getRandomArrayElement} from './util.js';
+import { getRandomInteger, createRandomNumbers, getRandomArrayElement } from './util.js';
 
 const DESCRIPTIONS = [
   'Пойманный момент, который невозможно забыть.',
@@ -58,4 +58,4 @@ const createPhotoDescription = () => ({
 
 const createPhotoDescriptions = () => Array.from({length: 25}, createPhotoDescription);
 
-export {createPhotoDescriptions};
+export { createPhotoDescriptions };

@@ -221,4 +221,4 @@ const resetControlToStandart = () => {
 minusButton.addEventListener('click', onMinusButtonClick);
 plusButton.addEventListener('click', onPlusButtonClick);
 
-export {resetSliderToNone, resetControlToStandart};
+export { resetSliderToNone, resetControlToStandart };
