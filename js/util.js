@@ -41,4 +41,17 @@ const shuffleArray = (array) => {
   return array;
 };
 
-export {getRandomInteger, createRandomNumbers, getRandomArrayElement, isEscapeKey, debounce, shuffleArray};
+const showAlert = (message) => {
+  const messageAlert = document.createElement('div');
+  messageAlert.style.position = 'absolute';
+  messageAlert.style.left = 0;
+  messageAlert.style.top = 0;
+  messageAlert.style.right = 0;
+  messageAlert.style.fontSize = '25px';
+  messageAlert.style.backgroundColor = 'red';
+  messageAlert.style.textAlign = 'center';
+  messageAlert.textContent = message;
+  document.body.append(messageAlert);
+};
+
+export { getRandomInteger, createRandomNumbers, getRandomArrayElement, isEscapeKey, debounce, shuffleArray, showAlert };

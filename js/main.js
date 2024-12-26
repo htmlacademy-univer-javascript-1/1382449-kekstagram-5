@@ -1,9 +1,13 @@
 import './pictures.js';
-import { loadData } from './fetch.js';
+import { loadData, uploadData } from './fetch.js';
 import { renderPhotos } from './pictures.js';
 import './hashtags.js';
 import './slider-and-control.js';
 import './filters.js';
+import './own-photos.js';
+import { showAlert } from './util.js';
+import { showErrorMessage, showSuccessMessage } from './messages.js';
+import { hideModal, setOnFormSubmit } from './hashtags.js';
 
 let photos;
 
@@ -14,18 +18,19 @@ const onSuccess = (data) => {
 };
 
 const onFail = () => {
-  const messageAlert = document.createElement('div');
-  messageAlert.style.position = 'absolute';
-  messageAlert.style.left = 0;
-  messageAlert.style.top = 0;
-  messageAlert.style.right = 0;
-  messageAlert.style.fontSize = '25px';
-  messageAlert.style.backgroundColor = 'red';
-  messageAlert.style.textAlign = 'center';
-  messageAlert.textContent = 'Возникла ошибка при загрузке фотографий';
-  document.body.append(messageAlert);
+  showAlert('Произошла ошибка при загрузке фотографий');
 };
 
 loadData(onSuccess, onFail);
+
+setOnFormSubmit(async (data) => {
+  try {
+    uploadData(data);
+    hideModal();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+  }
+});
 
 export { photos };
