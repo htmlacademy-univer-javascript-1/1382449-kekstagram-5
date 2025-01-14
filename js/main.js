@@ -6,8 +6,6 @@ import './slider-and-control.js';
 import './filters.js';
 import './own-photos.js';
 import { showAlert } from './util.js';
-// import { showErrorMessage, showSuccessMessage } from './messages.js';
-// import { hideModal, setOnFormSubmit, setPhotoListeners } from './hashtags.js';
 
 let photos;
 

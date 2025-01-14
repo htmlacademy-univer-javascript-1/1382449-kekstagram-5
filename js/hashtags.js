@@ -129,4 +129,4 @@ const onFormSubmit = (evt) => {
 
 form.addEventListener('submit', onFormSubmit);
 
-export { toggleSubmitButton };
+export { hideModal, toggleSubmitButton };
