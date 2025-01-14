@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { resetSliderToNone, resetControlToStandart } from './slider-and-control.js';
+import { uploadData } from './fetch.js';
+import { showErrorMessage, showSuccessMessage } from './messages.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_SYMBOLS = 20;
@@ -37,7 +39,7 @@ const isTextFieldFocused = () => document.activeElement === inputHashtag
 
 let errorMessage = '';
 
-const error = () => errorMessage;
+const showError = () => errorMessage;
 
 const hashtagsHandler = (value) => {
   errorMessage = '';
@@ -90,7 +92,7 @@ const hashtagsHandler = (value) => {
   });
 };
 
-pristine.addValidator(inputHashtag, hashtagsHandler, error, 2, false);
+pristine.addValidator(inputHashtag, hashtagsHandler, showError, 2, false);
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
@@ -105,15 +107,26 @@ const onFileInputChange = () => showModal;
 form.addEventListener('change', onFileInputChange());
 form.querySelector('.img-upload__cancel').addEventListener('click', onCancelButtonClick());
 
-const setOnFormSubmit = (callback) => {
-  form.addEventListener('submit', async (evt) => {
-    evt.preventDefault();
-    if (pristine.validate()) {
-      submitButton.disabled = true;
-      await callback(new FormData(form));
-      submitButton.disabled = false;
-    }
-  });
+const toggleSubmitButton = (isDisabled = false) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? 'Публикую...' : 'Опубликовать';
 };
 
-export { hideModal, setOnFormSubmit };
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    toggleSubmitButton(true);
+    uploadData(
+      showSuccessMessage,
+      showErrorMessage,
+      'POST',
+      new FormData(evt.target)
+    );
+  }
+};
+
+form.addEventListener('submit', onFormSubmit);
+
+export { toggleSubmitButton };
