@@ -1,3 +1,4 @@
+import { hideModal, toggleSubmitButton } from './hashtags.js';
 import { isEscapeKey } from './util.js';
 
 const successMessage = document.querySelector('#success').content.querySelector('.success');
@@ -34,10 +35,13 @@ const showMessage = (messageElement, closeButtonClass) => {
 
 const showSuccessMessage = () => {
   showMessage(successMessage, '.success__button');
+  toggleSubmitButton();
+  document.querySelector('.success__button').addEventListener('click', hideModal());
 };
 
 const showErrorMessage = () => {
   showMessage(errorMessage, '.error__button');
+  toggleSubmitButton();
 };
 
 export { showSuccessMessage, showErrorMessage };
